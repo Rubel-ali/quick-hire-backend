@@ -18,6 +18,11 @@ export interface IUser {
   updatedAt?: Date;
 }
 
+export type AuthUser = {
+  id: string;
+  role: UserRole;
+};
+
 
 export type IUserFilterRequest = {
   name?: string | undefined;

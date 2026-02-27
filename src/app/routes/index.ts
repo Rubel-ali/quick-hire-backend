@@ -1,13 +1,8 @@
 import express from "express";
 import { userRoutes } from "../modules/User/user.route";
 import { AuthRoutes } from "../modules/Auth/auth.routes";
-import { CoursesRoutes } from "../modules/Courses/Courses.routes";
-import { VideosRoutes } from "../modules/Videos/Videos.routes";
-import { ReviewRoutes } from "../modules/Review/Review.routes";
-import { CategoryRoutes } from "../modules/Category/Category.routes";
-import { WatchHistoryRoutes } from "../modules/WatchHistory/WatchHistory.routes";
-import { NotificationRoutes } from "../modules/Notification/Notification.routes";
-import { DashboardRoutes } from "../modules/dashboard/dashboard.routes";
+import { JobRoutes } from "../modules/Job/Job.routes";
+import { ApplicationRoutes } from "../modules/Application/Application.routes";
 
 const router = express.Router();
 
@@ -21,33 +16,14 @@ const moduleRoutes = [
     route: AuthRoutes,
   },
   {
-    path: "/courses",
-    route: CoursesRoutes,
+    path: "/jobs",
+    route: JobRoutes,
   },
   {
-    path: "/videos",
-    route: VideosRoutes,
+    path: "/applications",
+    route: ApplicationRoutes,
   },
-  {
-    path: "/reviews",
-    route: ReviewRoutes,
-  },
-  {
-    path: "/category",
-    route: CategoryRoutes,
-  },
-  {
-    path: "/watch",
-    route: WatchHistoryRoutes,
-  },
-  {
-    path: "/notifications",
-    route: NotificationRoutes,
-  },
-  {
-    path: "/dashboard",
-    route: DashboardRoutes,
-  },
+
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

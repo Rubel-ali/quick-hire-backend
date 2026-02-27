@@ -3,8 +3,6 @@ import config from "./config";
 import cron from "node-cron";
 import prisma from "./shared/prisma";
 import app from "./app";
-import cors from "cors";
-import { setupWebSocket } from "./app/modules/WebSocket/web.socket";
 
 let server: Server;
 
@@ -12,7 +10,7 @@ async function startServer() {
   server = app.listen(config.port, async () => {
     console.log("Server is listiening on port ", config.port);
 
-    await setupWebSocket(server);
+  
     // console.log("WebSocket server is running");
   });
 }
