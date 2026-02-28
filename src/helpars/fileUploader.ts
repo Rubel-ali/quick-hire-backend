@@ -51,7 +51,7 @@ const uploadFile = upload.single("file");
 const uploadMultipleImage = upload.fields([{ name: "images", maxCount: 15 }]);
 
 // Upload profile and banner images
-const uploadCourseImage = upload.fields([
+const uploadImage = upload.fields([
   { name: "text", maxCount: 5 },
   { name: "file", maxCount: 5 },
   { name: "profile", maxCount: 5 },
@@ -132,11 +132,12 @@ const uploadToDigitalOcean = async (file: Express.Multer.File) => {
 
 // ✅ No Name Changes, Just Fixes
 
+
 export const fileUploader = {
   upload,
   uploadSingle,
   uploadMultipleImage,
-  uploadCourseImage,
+  uploadImage,
   uploadFile,
   cloudinaryUpload,
   uploadToDigitalOcean,

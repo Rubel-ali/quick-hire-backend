@@ -9,14 +9,12 @@ const createApplicationSchema = z.object({
     ),
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email format"),
-  resumeLink: z.string().url("Resume link must be valid URL"),
   coverNote: z.string().optional(),
 });
 
 const updateSchema = z.object({
   name: z.string().min(1, "Name is required").optional(),
   email: z.string().email("Invalid email format").optional(),
-  resumeLink: z.string().url("Resume link must be valid URL").optional(),
   coverNote: z.string().optional(),
 });
 

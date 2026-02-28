@@ -10,7 +10,8 @@ import { jobSearchableFields } from "./Job.constant";
 
 const createIntoDb = async (
   payload: CreateJobPayload,
-  user: AuthUser
+  user: AuthUser,
+  companyLogo: string
 ) => {
   if (
     user.role !== UserRole.ADMIN &&
@@ -22,6 +23,7 @@ const createIntoDb = async (
   return prisma.job.create({
     data: {
       ...payload,
+      companyLogo,
       admin: {
         connect: { id: user.id },
       },

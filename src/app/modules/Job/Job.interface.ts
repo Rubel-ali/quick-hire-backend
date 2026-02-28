@@ -3,6 +3,7 @@ import { UserRole } from "@prisma/client";
 export type CreateJobPayload = {
   title: string;
   company: string;
+  companyLogo?: string;
   location: string;
   category: string;
   description: string;

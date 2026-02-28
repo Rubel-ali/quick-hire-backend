@@ -1,4 +1,3 @@
-
 import { Prisma, UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import ApiError from "../../../errors/ApiErrors";
@@ -9,19 +8,45 @@ type AuthUser = {
   id: string;
   role: UserRole;
 };
-
-const createIntoDb = async (payload: CreateApplicationData, user: AuthUser) => {
+const createIntoDb = async (
+  payload: CreateApplicationData,
+  user: AuthUser
+) => {
   if (user.role !== UserRole.USER) {
     throw new ApiError(httpStatus.FORBIDDEN, "Only users can apply");
   }
 
-  // Check job exists
+  if (!payload.resumeLink) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Resume link is required"
+    );
+  }
+
+  // Job exists কিনা check
   const job = await prisma.job.findUnique({
     where: { id: payload.jobId },
   });
 
   if (!job) {
     throw new ApiError(httpStatus.NOT_FOUND, "Job not found");
+  }
+
+  // Already applied কিনা check
+  const existingApplication = await prisma.application.findUnique({
+    where: {
+      userId_jobId: {
+        userId: user.id,
+        jobId: payload.jobId,
+      },
+    },
+  });
+
+  if (existingApplication) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "You have already applied to this job"
+    );
   }
 
   return prisma.application.create({

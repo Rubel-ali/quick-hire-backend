@@ -4,13 +4,15 @@ import validateRequest from "../../middlewares/validateRequest";
 import { JobController } from "./Job.controller";
 import { JobValidation } from "./Job.validation";
 import { UserRole } from "@prisma/client";
+import { fileUploader } from "../../../helpars/fileUploader";
 
 const router = express.Router();
 
 router.post(
   "/",
   auth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
-  validateRequest(JobValidation.createJobSchema),
+  fileUploader.uploadImage,
+  // validateRequest(JobValidation.createJobSchema),
   JobController.createJob,
 );
 

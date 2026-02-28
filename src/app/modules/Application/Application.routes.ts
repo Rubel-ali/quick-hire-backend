@@ -4,13 +4,15 @@ import { UserRole } from "@prisma/client";
 import validateRequest from "../../middlewares/validateRequest";
 import { ApplicationController } from "./Application.controller";
 import { ApplicationValidation } from "./Application.validation";
+import { fileUploader } from "../../../helpars/fileUploader";
 
 const router = express.Router();
 
 router.post(
   "/",
   auth(UserRole.USER),
-  validateRequest(ApplicationValidation.createApplicationSchema),
+  
+  // validateRequest(ApplicationValidation.createApplicationSchema),
   ApplicationController.createApplication,
 );
 

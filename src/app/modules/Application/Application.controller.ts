@@ -3,6 +3,9 @@ import httpStatus from "http-status";
 import catchAsync from "../../../shared/catchAsync";
 import { ApplicationService } from "./Application.service";
 import sendResponse from "../../../shared/sendResponse";
+import ApiError from "../../../errors/ApiErrors";
+import { fileUploader } from "../../../helpars/fileUploader";
+import { CreateApplicationData } from "./Application.interface";
 
 type AuthUser = {
   id: string;
@@ -12,7 +15,16 @@ type AuthUser = {
 const createApplication = catchAsync(async (req: Request, res: Response) => {
   const user = req.user as AuthUser;
 
-  const result = await ApplicationService.createIntoDb(req.body, user);
+  if (!user) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Unauthorized access");
+  }
+
+  const applicationData: CreateApplicationData = req.body;
+
+  const result = await ApplicationService.createIntoDb(
+    applicationData,
+    user
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
